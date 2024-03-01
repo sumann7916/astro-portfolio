@@ -1,25 +1,50 @@
 ---
 import heroImage from '@assets/images/hero1.png';
 import { Image } from '@astrojs/image/components';
-import Button from '@components/ui/Button.astro';
+import { BackgroundBeams } from './ui/background-beams';
+import { SparklesCore } from './ui/sparkles';
+import { TypewriterEffect } from './ui/typewriter-effect';
+
+const introduction = "Hi! My name is Suman Khadka and I am a Software Engineer."
+	const arr = introduction.split(" ").map((text) => {
+		if(text === 'Suman' || text === 'Khadka'){
+			return {
+				text,
+				className: "text-orange dark:text-orange"
+			}
+		}
+		return {
+			text,
+		}
+	})
 ---
 
 <section
 	data-testid="hero"
-	class="flex h-screen flex-col-reverse items-center justify-center text-center lg:flex-row"
+	class="flex h-screen flex-col-reverse items-center justify-center text-center lg:flex-row relative z-10"
 >
+<div class="w-full absolute inset-0 h-screen">
+	<SparklesCore
+	  id="tsparticlesfullpage"
+	  background="transparent"
+	  minSize={0.6}
+	  maxSize={1.4}
+	  particleDensity={100}
+	  className="w-full h-full"
+	  particleColor="#FFFFFF"
+	  client:load
+	/>
+  </div>
 	<div class="mb-10 flex flex-col items-center lg:mb-0 lg:w-1/2">
 		<div>
-			<h1 class="mb-10 font-monospace text-3xl text-black dark:text-white lg:text-5xl">
-				Hi! My name is <span class="text-orange">Jane Doe</span> and I am a web developer based in New
-				York.
+			<h1 class="mb-10 font-monospace text-3xl text-black dark:text-white lg:text-5xl relative z-10">
+				<TypewriterEffect words={arr} client:load/>
+
 			</h1>
 		</div>
-		<div class="mb-10">
-			<Button style={'primary'} size={'lg'} class={'flex'} name="learn more">Learn more</Button>
-		</div>
 	</div>
-	<div data-testid="hero-img" class="mb-10 flex w-1/2 items-center justify-center">
+
+	<div data-testid="hero-img" class="hero-img mb-10 flex w-1/2 items-center justify-center relative z-10">
 		<Image
 			src={heroImage}
 			alt="Coding girl"
@@ -30,4 +55,5 @@ import Button from '@components/ui/Button.astro';
 			loading="eager"
 		/>
 	</div>
+<BackgroundBeams client:load/>
 </section>
